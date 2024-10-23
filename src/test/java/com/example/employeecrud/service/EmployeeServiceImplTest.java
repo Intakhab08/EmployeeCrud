@@ -5,10 +5,11 @@ import com.example.employeecrud.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class EmployeeServiceImplTest {
 
     @InjectMocks
@@ -29,9 +30,9 @@ class EmployeeServiceImplTest {
     void setUp(){
         MockitoAnnotations.openMocks(this);
     }
-    
+
     @Test
-    void getAllEmpoyeeTest(){
+    void getAllEmployeeTest(){
         List<Employee> emp=List.of(
                 new Employee(1, "John", "Python Dev", 65000),
                 new Employee(2, "Robert", "Java Dev", 45000));
@@ -56,7 +57,6 @@ class EmployeeServiceImplTest {
         Employee result = employeeService.createEmployee(employee);
         assertNotNull(result);
         Assertions.assertEquals("John", result.getName());
-
     }
 
     @Test
