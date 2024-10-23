@@ -12,7 +12,7 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
 
 @Service
 @Slf4j
@@ -25,8 +25,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployee() {
         if (employeeRepository.findAll().isEmpty()) {
+            log.error("List is Empty");
             throw new EmployeeNotFoundException("Employee list is Empty");
         }
+        log.info("Get all the Employee's");
         return this.employeeRepository.findAll();
     }
 
@@ -36,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             log.error("ID is not found");
             throw new EmployeeNotFoundException("Employee Not found with this Id");
         } else {
+            log.info("Found right employee");
             return employeeRepository.findById(id);
         }
     }
@@ -65,8 +68,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 field1.setAccessible(true);
                 ReflectionUtils.setField(field1, existingEmp, value);
             });
+            log.info("Desired field is updated");
             return employeeRepository.save(existingEmp);
         }
+        log.error("Id does not exist");
         return null;
     }
 }
